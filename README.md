@@ -41,6 +41,8 @@ npm run dev
 
 # Database Schema 
 
+### User Schema
+
 ```js
 const userSchema = new Schema({
     name: {
@@ -60,4 +62,77 @@ const userSchema = new Schema({
     timestamps: true,
 });
 ```
+### Property Schema
+```js
+const propertySchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    address: {
+        type: String,
+        required: true,
+    },
+    city: {
+        type: String,
+        required: true,
+    },
+    state: {
+        type: String,
+        required: true,
+    },
+    zipCode: {
+        type: String,
+        required: true,
+    },
+    country: {
+        type: String,
+        required: true,
+    },
+    pricePerNight: {
+        type: Number,
+        required: true,
+    },
+    amenities: [String],
+    images: [String],
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+}, {
+    timestamps: true,
+});
+```
+### History Schema
+```js
+const historySchema = new Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // Assuming there's a User model
+        required: true,
+    },
+    propertyId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Property',
+        required: true,
+    },
+    action: { 
+        type: String, 
+        enum: ['viewed', 'booked'], // You can extend this with other actions
+        required: true 
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now,
+    },
+}, {
+    timestamps: true,
+});
+```
+
+
 
