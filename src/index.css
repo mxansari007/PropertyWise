@@ -80,3 +80,22 @@ h2{
     @apply bg-background text-foreground;
   }
 }
+
+#range-slider-yellow .range-slider__range {
+  background: #ff0000;
+  transition: height 0.3s;
+}
+
+#range-slider-yellow .range-slider__thumb {
+  background: #fa0707;
+  transition: transform 0.3s;
+}
+
+#range-slider-yellow .range-slider__thumb[data-active] {
+  transform: translate(-50%, -50%) scale(1.25);
+}
+
+#range-slider-yellow .range-slider__range[data-active] {
+  height: 16px;
+}
+

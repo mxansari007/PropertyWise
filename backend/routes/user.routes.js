@@ -9,4 +9,10 @@ userRouter.post('/login',login)
 userRouter.get('/logout',logout)
 // userRouter.get('/profile',getProfile)
 
+
+
+
+
+
+
 export default userRouter;

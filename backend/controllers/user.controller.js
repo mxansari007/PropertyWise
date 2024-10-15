@@ -47,6 +47,7 @@ export const login = async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
+
         const token = user.getSignedToken();
 
         // Set cookie options

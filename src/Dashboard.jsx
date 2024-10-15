@@ -23,6 +23,8 @@ const Dashboard = () => {
     const [properties,setProperties] = useState([]);
     const [loading,setLoading] = useState(false);
     const [city,setCity] = useState('');
+    const [minRange,setMinRange] = useState(0);
+    const [maxRange,setMaxRange] = useState(5000);
 
     const fetchAllProperties = async()=>{
         setLoading(true);
@@ -43,6 +45,9 @@ const Dashboard = () => {
         fetchAllProperties()
     }
     ,[])
+
+
+
 
     useEffect(()=>{
         console.log(city);
@@ -80,6 +85,25 @@ const Dashboard = () => {
         setLoading(false);
     }
 
+    const searchRange = async ()=>{
+        setLoading(true);
+        try{
+            const res = await axios({
+                method:'POST',
+                withCredentials:true,
+                url:import.meta.env.VITE_API_URL + '/property/range',
+                data:{min:minRange,max:maxRange}
+            })
+
+            setProperties(res.data);
+
+
+        }catch(err){
+            console.log(err);
+        }
+        setLoading(false);
+    }
+
 
     return <>
         <div className="flex justify-between p-4 px-6 text-red-600">
@@ -102,10 +126,18 @@ const Dashboard = () => {
         </div>
     
 
-        <div className="flex min-w-full justify-center">
+        <div className="flex min-w-full justify-center items-center flex-col">
             <div className="relative max-w-[600px] w-full">
-                <input onChange={(e)=>setCity(e.target.value)} className="border-2 rounded-full p-4 w-full" type="text"></input>
+                <input placeholder="Enter City" onChange={(e)=>setCity(e.target.value)} className="border-2 rounded-full p-4 w-full" type="text"></input>
                 <Button onClick={()=>searchValue()} className="absolute top-0 right-0 px-8 py-6 mr-2 mt-[6px] rounded-full bg-red-600">Search</Button>
+            </div>
+            <div className="max-w-[600px] min-w-[200px] mt-10">
+                <p className="text-center text-xl mb-2">Enter Range:</p>
+                <div className="flex">
+                <input onChange={(e)=>setMinRange(e.target.value)} className="border-2 rounded-full p-4"/> - <input onChange={(e)=>setMaxRange(e.target.value)}  className="border-2 rounded-full p-4"/>
+                </div>
+                <Button onClick={()=>searchRange()} className="w-full px-8 py-6 mr-2 mt-[6px] rounded-full bg-red-600">Search</Button>
+
             </div>
         </div>
 
