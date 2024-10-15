@@ -19,3 +19,7 @@ Propertywise is a home rental application designed to connect property owners wi
 -  bcrypt.js for password hashing
 -  JWT for user authentication
 -  Multer for file uploads (images)
+
+# Installation
+1. Clone the repository:
+```bash git clone https://github.com/your-username/propertywise.git
