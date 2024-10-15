@@ -20,6 +20,9 @@ Propertywise is a home rental application designed to connect property owners wi
 -  JWT for user authentication
 -  Multer for file uploads (images)
 
+# Project Live Link
+[Click Here](https://property-wise.vercel.app/)
+
 # Installation
 1. Clone the repository:
 ```bash
