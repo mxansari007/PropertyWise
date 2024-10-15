@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form'
 import {DevTool} from '@hookform/devtools'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
-
+import Loading from "./components/Loading";
 function Home() {
   const navigate = useNavigate();
     
@@ -11,7 +11,10 @@ function Home() {
     mode:"all"
   })
 
+  const [loading,setLoading]= useState(false);
+
   const onSubmit = async (data)=>{
+    setLoading(true);
     try{
         const res = axios({
             method:"POST",
@@ -30,6 +33,7 @@ function Home() {
     catch(err){
         console.log(err)
     }
+    setLoading(false);
   }
 
 
@@ -49,12 +53,13 @@ function Home() {
             <p className="text-red-500">{errors.email?.message}</p>
            <input placeholder="Enter Password" {...register("password",{required:"Password Not Entered"})} className="border-2 py-2 rounded-md px-2 text-xl" type="password"/>
               <p className="text-red-500">{errors.password?.message}</p>
-           <button className="bg-blue-600 hover:bg-blue-500 py-2 rounded-md text-white font-bold">Login</button>
+           <button className="bg-red-500 hover:bg-red-400 py-2 rounded-md text-white font-bold">Login</button>
            <button  className="bg-yellow-500 hover:bg-yellow-400 py-2 rounded-md text-white font-bold"  onClick={()=>{navigate('createAccount')}}>Create New Account</button>
           </div>
         </form>
 
       </div>
+      {loading?<Loading/>:null}
    </>
   )
 }

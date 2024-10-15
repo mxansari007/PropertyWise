@@ -3,11 +3,12 @@ import {useForm} from 'react-hook-form'
 import {DevTool} from '@hookform/devtools'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
-
+import Loading from './components/Loading';
 
 
 const CreateAccount = ()=>{
     const [account,setAccount] = useState('New');
+    const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
   const {register,handleSubmit,watch,formState:{errors},control} = useForm({
     mode:"all"
@@ -17,6 +18,7 @@ const CreateAccount = ()=>{
 
 
   const onSubmit = async (data)=>{
+    setLoading(true);
     try{
         const res = axios({
             method:"POST",
@@ -33,7 +35,9 @@ const CreateAccount = ()=>{
     catch(err){
         console.log(err)
     }
+    setLoading(false);
   }
+
 
   return <>
       <div className="p-4 text-3xl px-8 z-10">
@@ -54,11 +58,12 @@ const CreateAccount = ()=>{
            <input {...register("confirmPass",{validate:value=>value==pass || "password do not match"})}   className="border-2 py-2 rounded-md px-2 text-xl" placeholder="Enter Confirm Password" type="password"/>
            {errors.confirmPass && <p className="text-red-500">{errors.confirmPass.message}</p>}
            <button type="submit" className="bg-yellow-500 hover:bg-yellow-400 py-2 rounded-md text-white font-bold">Create New Account</button>
-            <p className="text-center">Already Have an Account <span onClick={()=>{navigate('/')}} className="cursor-pointer text-blue-500">Click Here</span></p>
+            <p className="text-center">Already Have an Account <span onClick={()=>{navigate('/')}} className="cursor-pointer text-red-500">Click Here</span></p>
           </div>
         </form>
         </div>
         <DevTool control={control} />
+        {loading?<Loading />:null}
   </>
 
 }
