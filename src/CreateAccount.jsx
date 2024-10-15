@@ -4,7 +4,7 @@ import {DevTool} from '@hookform/devtools'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import Loading from './components/Loading';
-
+import svgBack from './assets/back.svg';
 
 const CreateAccount = ()=>{
     const [account,setAccount] = useState('New');
@@ -43,7 +43,12 @@ const CreateAccount = ()=>{
       <div className="p-4 text-3xl px-8 z-10">
       <h1 className="text-red-600">Property<span className="font-light text-black">Wise</span></h1>
       </div>
-      <div className="flex justify-center items-center h-[100vh] ">
+      <div className="flex md:flex-row flex-col">
+            <div className="mt-10 flex-[2] md:flex-1 flex items-center justify-center">
+        <img className="-z-10" src={svgBack} />
+        </div>
+    <div className="flex-[3] md:flex-1">
+      <div className="flex justify-center items-center mt-10 md:mt-0 md:h-[100vh]">
         <form onSubmit={handleSubmit(onSubmit)} className="rounded-lg p-4 border-2 min-w-[400px] min-h-[400px] shadow-zinc-100 shadow-lg rouded-lg">
           <div className="p-4">
             <h2 className="text-2xl text-center">Create New Account</h2>
@@ -61,6 +66,8 @@ const CreateAccount = ()=>{
             <p className="text-center">Already Have an Account <span onClick={()=>{navigate('/')}} className="cursor-pointer text-red-500">Click Here</span></p>
           </div>
         </form>
+        </div>
+        </div>
         </div>
         <DevTool control={control} />
         {loading?<Loading />:null}
