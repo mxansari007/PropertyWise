@@ -137,5 +137,13 @@ const historySchema = new Schema({
 });
 ```
 
+# ScreenShots
+### Login Screen
+![image](https://github.com/user-attachments/assets/b6bbd542-3dec-4022-b6d7-ca15c475ef64)
+### Signup Screen
+![image](https://github.com/user-attachments/assets/2695db82-c9ad-42d8-99c4-6f0375142a97)
+### Dashboard Screen
+![image](https://github.com/user-attachments/assets/9051aea1-9c8c-4d23-b8c2-fcd79c9343d8)
+
 
 
