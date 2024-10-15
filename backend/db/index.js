@@ -3,7 +3,7 @@ import { DB_NAME } from '../constant.js';
 
 const connectDB = async () => {
     try {
-        await mongoose.connect(`mongodb://localhost:27017/${DB_NAME}`, {
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
