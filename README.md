@@ -22,4 +22,42 @@ Propertywise is a home rental application designed to connect property owners wi
 
 # Installation
 1. Clone the repository:
-```bash git clone https://github.com/your-username/propertywise.git
+```bash
+git clone https://github.com/your-username/propertywise.git
+```
+2. Navigate to the project directory:
+```bash
+cd Propertywise
+```
+3. Install Dependencies
+
+```bash
+npm install
+```
+4. start developement
+```bash
+npm run dev
+```
+
+# Database Schema 
+
+```js
+const userSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, "Name is required"],
+    },
+    email: {
+        type: String,
+        required: [true, "Email is required"],
+        unique: [true, "Email already exist"],
+    },
+    password: {
+        type: String,
+        required: [true, "Password is required"],
+    },
+}, {
+    timestamps: true,
+});
+```
+
