@@ -13,7 +13,7 @@ import Card from "./components/Card"
 import {useEffect,useState} from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
-
+import Loading from './components/Loading'
 
 
 
@@ -21,8 +21,11 @@ import { useNavigate } from "react-router-dom"
 const Dashboard = () => {
 
     const [properties,setProperties] = useState([]);
+    const [loading,setLoading] = useState(false);
+    const [city,setCity] = useState('');
 
     const fetchAllProperties = async()=>{
+        setLoading(true);
         try {
             const response = await axios.get(import.meta.env.VITE_API_URL+'/property/get')
             console.log(response.data)
@@ -30,6 +33,7 @@ const Dashboard = () => {
         } catch (error) {
             console.log(error)
         }
+        setLoading(false);
     }
 
     const navigate = useNavigate()
@@ -39,16 +43,41 @@ const Dashboard = () => {
         fetchAllProperties()
     }
     ,[])
+
+    useEffect(()=>{
+        console.log(city);
+    },[city])
         
 
     const userLogout = async()=>{
         try {
-            const response = await axios.get(import.meta.env.VITE_API_URL+'/user/logout')
+            const response = await axios({
+                method:'GET',
+                url:import.meta.env.VITE_API_URL+'/user/logout',
+                withCredentials:true
+            })
             console.log(response.data)
             navigate('/')
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const searchValue = async ()=>{
+        setLoading(true);
+        try{
+            const res = await axios({
+                method:'POST',
+                url:import.meta.env.VITE_API_URL+'/property/getPropertyFromCity',
+                withCredentials:true,
+                data:{city:city}
+            })
+
+            setProperties(res.data);
+        }catch(err){
+            console.log(err);
+        }
+        setLoading(false);
     }
 
 
@@ -75,16 +104,16 @@ const Dashboard = () => {
 
         <div className="flex min-w-full justify-center">
             <div className="relative max-w-[600px] w-full">
-                <input className="border-2 rounded-full p-4 w-full" type="text"></input>
-                <Button className="absolute top-0 right-0 px-8 py-6 mr-2 mt-[6px] rounded-full bg-red-600">Search</Button>
+                <input onChange={(e)=>setCity(e.target.value)} className="border-2 rounded-full p-4 w-full" type="text"></input>
+                <Button onClick={()=>searchValue()} className="absolute top-0 right-0 px-8 py-6 mr-2 mt-[6px] rounded-full bg-red-600">Search</Button>
             </div>
         </div>
 
 
-        <div className="mt-10 flex p-8 gap-4 justify-center">
+        <div className="p-20 mt-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 grid-flow-row gap-4 justify-center">
             {properties.map((property,index)=><Card key={index} data={property}/>)}
         </div>
-
+        {loading?<Loading/>:null}
     </>
 
 }
